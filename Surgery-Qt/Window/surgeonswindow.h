@@ -2,7 +2,7 @@
 #define SURGEONSWINDOW_H
 
 #include <QWidget>
-#include "ModelView/Model/surgeonstablemodel.h"
+#include "ModelView/Model/surgeonsmodel.h"
 
 namespace Ui {
 class SurgeonsWindow;
@@ -13,16 +13,15 @@ class SurgeonsWindow : public QWidget
     Q_OBJECT
 
 public:
-    SurgeonsWindow(std::vector<Hernia::Surgeon> * surgeons, QWidget *parent = nullptr);
+    SurgeonsWindow(SurgeonsModel * model, QWidget *parent = nullptr);
     ~SurgeonsWindow();
 
 private slots:
-    void OnAddSurgeonButtonClicked();
+    void on_addSurgeonButton_clicked();
 
 private:
     Ui::SurgeonsWindow *ui;
-    SurgeonsTableModel *m_SurgeonsTableModel;
-    std::vector<Hernia::Surgeon> * m_Surgeons;
+    SurgeonsModel * m_SurgeonsModel;
 };
 
 #endif // SURGEONSWINDOW_H

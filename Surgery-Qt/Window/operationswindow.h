@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "Source/handledoperation.h"
+#include "ModelView/Model/surgeonsmodel.h"
+#include "ModelView/Model/handledoperationsmodel.h"
 
 namespace Ui {
 class OperationsWindow;
@@ -13,7 +15,7 @@ class OperationsWindow : public QWidget
     Q_OBJECT
 
 public:
-    OperationsWindow(std::vector<Hernia::HandledOperation> * handledOperations, QWidget *parent = nullptr);
+    OperationsWindow(SurgeonsModel * model, HandledOperationsModel * handledOperationsModel, QWidget *parent = nullptr);
     ~OperationsWindow();
 
 private slots:
@@ -21,7 +23,8 @@ private slots:
 
 private:
     Ui::OperationsWindow *ui;
-    std::vector<Hernia::HandledOperation> * m_HandledOperations;
+    SurgeonsModel * m_SurgeonsModel;
+    HandledOperationsModel * m_HandledOperationsModel;
 
 };
 

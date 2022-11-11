@@ -26,7 +26,7 @@ QVariant OperationTitlesListModel::data(const QModelIndex &index, int role) cons
     }
     else if (role == Qt::UserRole)
     {
-        return static_cast<int>(m_Operations[index.row()].GetOperationId());
+        return static_cast<int>(m_Operations[index.row()].GetId());
     }
 
     return QVariant();

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "Source/sequela.h"
+#include "Source/sequelatype.h"
 
 namespace Ui {
 class SequelaChooseDialog;
@@ -26,6 +27,9 @@ private slots:
 private:
     Ui::SequelaChooseDialog *ui;
     std::optional<Hernia::Sequela> m_Sequela;
+
+    std::vector<Hernia::SequelaType> m_SequelaTypes;
+    std::vector<Hernia::Sequela> m_Sequelas;
 };
 
 #endif // SEQUELACHOOSEDIALOG_H

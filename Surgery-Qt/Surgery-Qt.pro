@@ -23,11 +23,15 @@ SOURCES += \
     Dialog/operationadddialog.cpp \
     Dialog/sequelachoosedialog.cpp \
     Dialog/surgeonadddialog.cpp \
-    ModelView/Model/operationtitleslistmodel.cpp \
-    ModelView/Model/surgeonlistmodel.cpp \
-    main.cpp \
     ModelView/Model/genderlistmodel.cpp \
-    ModelView/Model/surgeonstablemodel.cpp \
+    ModelView/Model/handledoperationsmodel.cpp \
+    ModelView/Model/operationtitleslistmodel.cpp \
+    ModelView/Model/surgeonsmodel.cpp \
+    ModelView/View/handledoperationstableview.cpp \
+    ModelView/View/surgeonstableview.cpp \
+    ModelView/View/surgeonscomboview.cpp \
+    Source/CustomWidgets/rangeslider.cpp \
+    main.cpp \
     Source/gender.cpp \
     Source/handledoperation.cpp \
     Source/operation.cpp \
@@ -46,9 +50,13 @@ HEADERS += \
     Dialog/sequelachoosedialog.h \
     Dialog/surgeonadddialog.h \
     ModelView/Model/genderlistmodel.h \
+    ModelView/Model/handledoperationsmodel.h \
     ModelView/Model/operationtitleslistmodel.h \
-    ModelView/Model/surgeonlistmodel.h \
-    ModelView/Model/surgeonstablemodel.h \
+    ModelView/Model/surgeonsmodel.h \
+    ModelView/View/handledoperationstableview.h \
+    ModelView/View/surgeonstableview.h \
+    ModelView/View/surgeonscomboview.h \
+    Source/CustomWidgets/rangeslider.h \
     Source/gender.h \
     Source/handledoperation.h \
     Source/operation.h \

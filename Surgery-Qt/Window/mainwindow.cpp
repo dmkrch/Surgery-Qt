@@ -3,9 +3,11 @@
 
 #include <QStringListModel>
 
+#include "Db/databasemanager.h"
 #include "Window/statisticswindow.h"
 #include "Window/surgeonswindow.h"
-#include "Db/databasemanager.h"
+#include "ModelView/Model/surgeonsmodel.h"
+#include "ModelView/Model/handledoperationsmodel.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,15 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_Surgeons = new std::vector<Hernia::Surgeon>;
-    db::DatabaseManager::GetInstance().LoadSurgeons(*m_Surgeons);
+    auto surgModel = new SurgeonsModel();
+    auto handledOpModel = new HandledOperationsModel();
 
-    m_HandledOperations = new std::vector<Hernia::HandledOperation>;
-    db::DatabaseManager::GetInstance().LoadHandledOperations(*m_HandledOperations);
-
-    ui->tabWidget->addTab(new StatisticsWindow(), QString("Статистика"));
-    ui->tabWidget->addTab(new OperationsWindow(m_HandledOperations), QString("Операции"));
-    ui->tabWidget->addTab(new SurgeonsWindow(m_Surgeons), QString("Хирурги"));
+    ui->tabWidget->addTab(new StatisticsWindow(surgModel, handledOpModel), QString("Статистика"));
+    ui->tabWidget->addTab(new OperationsWindow(surgModel, handledOpModel), QString("Операции"));
+    ui->tabWidget->addTab(new SurgeonsWindow(surgModel), QString("Хирурги"));
     ui->tabWidget->setTabShape(QTabWidget::Triangular);
 }
 

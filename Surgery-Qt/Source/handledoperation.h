@@ -15,14 +15,14 @@ namespace Hernia
     public:
         HandledOperation();
         HandledOperation(int id, Operation operation, Surgeon surgeon,
-                         QDate date, Sequela sequela, Gender patientGender,
+                         QDate date, std::optional<Sequela> sequela, Gender patientGender,
                          QDate patientBirthDate, int recoveringDays);
-    private:
+
         int m_Id;
         Operation m_Operation;
         Surgeon m_Surgeon;
         QDate m_Date;
-        Sequela m_Sequela;
+        std::optional<Sequela> m_Sequela;
         Gender m_PatientGender;
         QDate m_PatientDateBirth;
         int m_RecoveringDays;

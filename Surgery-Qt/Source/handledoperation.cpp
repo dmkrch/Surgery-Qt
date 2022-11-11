@@ -9,7 +9,7 @@ namespace Hernia
     }
 
     HandledOperation::HandledOperation(int id, Operation operation, Surgeon surgeon,
-                     QDate date, Sequela sequela, Gender patientGender,
+                     QDate date, std::optional<Sequela> sequela, Gender patientGender,
                      QDate patientBirthDate, int recoveringDays)
     {
         m_Id = id;

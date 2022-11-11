@@ -1,23 +1,30 @@
 #include "surgeonswindow.h"
 #include "ui_surgeonswindow.h"
 
+#include "ModelView/View/surgeonstableview.h"
 #include "Dialog/surgeonadddialog.h"
 #include "Db/databasemanager.h"
 #include <QMessageBox>
+#include <QBoxLayout>
+#include <QPushButton>
 
-SurgeonsWindow::SurgeonsWindow(std::vector<Hernia::Surgeon> * surgeons, QWidget *parent)
+SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, QWidget *parent)
     : QWidget(parent)
-    , m_Surgeons(surgeons)
     , ui(new Ui::SurgeonsWindow)
 {
-    ui->setupUi(this);
+    m_SurgeonsModel = model;
 
-    // connections. sender - receiver
-    connect(ui->addSurgeonButton, &QPushButton::clicked,
-            this, &SurgeonsWindow::OnAddSurgeonButtonClicked);
+    // setting view - qtablewidget
+    auto tableView = new SurgeonsTableView(model);
+    auto addSurgeonButton = new QPushButton("Добавить хирурга");
 
-    m_SurgeonsTableModel = new SurgeonsTableModel(m_Surgeons);
-    ui->tableView->setModel(m_SurgeonsTableModel);
+    auto vertLayout = new QVBoxLayout;
+    vertLayout->addWidget(tableView);
+    vertLayout->addWidget(addSurgeonButton);
+
+    this->setLayout(vertLayout);
+
+    connect(addSurgeonButton, &QPushButton::clicked, this, &SurgeonsWindow::on_addSurgeonButton_clicked);
 }
 
 SurgeonsWindow::~SurgeonsWindow()
@@ -25,11 +32,11 @@ SurgeonsWindow::~SurgeonsWindow()
     delete ui;
 }
 
-void SurgeonsWindow::OnAddSurgeonButtonClicked()
+void SurgeonsWindow::on_addSurgeonButton_clicked()
 {
     SurgeonAddDialog dlg(this);
 
-    if(dlg.exec() == QDialog::Accepted)
+    if (dlg.exec() == QDialog::Accepted)
     {
         auto surgeon = dlg.GetSurgeon();
 
@@ -40,7 +47,7 @@ void SurgeonsWindow::OnAddSurgeonButtonClicked()
             {
                 int surgId = db::DatabaseManager::GetInstance().GetLastAddedSurgeonId();
                 surgeon.value().SetId(surgId);
-                m_SurgeonsTableModel->addSurgeon(surgeon.value());
+                m_SurgeonsModel->AddSurgeon(surgeon.value());
 
                 QMessageBox::information(this,"Успех", "Хирург " + surgeon.value().GetName() + " успешно добавлен", QMessageBox::Ok);
             }

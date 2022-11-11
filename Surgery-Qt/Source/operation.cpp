@@ -19,7 +19,7 @@ namespace Hernia
         return m_Title;
     }
 
-    int Operation::GetOperationId() const
+    int Operation::GetId() const
     {
         return m_Id;
     }

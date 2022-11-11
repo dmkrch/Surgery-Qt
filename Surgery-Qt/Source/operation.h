@@ -12,7 +12,7 @@ namespace Hernia
         Operation(int id, const QString & title);
 
         QString GetOperationTitle() const;
-        int GetOperationId() const;
+        int GetId() const;
 
     private:
         int m_Id;
