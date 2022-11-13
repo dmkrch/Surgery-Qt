@@ -195,6 +195,19 @@ namespace db
         return query.exec();
     }
 
+    bool DatabaseManager::DeleteHandledOperation(int operationId)
+    {
+        if (IsHandledOperationByIdExists(operationId))
+        {
+            QSqlQuery query;
+
+            query.prepare("delete from HandledOperation where id=:operationId");
+            query.bindValue(":operationId", operationId);
+
+            return query.exec();
+        }
+    }
+
     int DatabaseManager::GetLastAddedSurgeonId() const
     {
         QSqlQuery query;
@@ -271,5 +284,18 @@ namespace db
             return *it;
         else
             return std::nullopt;
+    }
+
+    bool DatabaseManager::IsHandledOperationByIdExists(int id)
+    {
+        std::vector<Hernia::HandledOperation> handledOperations;
+        LoadHandledOperations(handledOperations);
+
+        auto it = std::find_if(handledOperations.begin(), handledOperations.end(), [id](const auto & operation)
+        {
+            return operation.m_Id == id;
+        });
+
+        return it != handledOperations.end();
     }
 }

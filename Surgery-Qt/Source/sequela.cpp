@@ -8,7 +8,7 @@ namespace Hernia
 
     }
 
-    Sequela::Sequela(int id, const QString & title, SequelaType sequelaType)
+    Sequela::Sequela(int id, const QString & title, const SequelaType & sequelaType)
     {
         m_Id = id;
         m_Title = title;

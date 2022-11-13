@@ -8,7 +8,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 
-SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, QWidget *parent)
+SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, QWidget * parent)
     : QWidget(parent)
     , ui(new Ui::SurgeonsWindow)
 {

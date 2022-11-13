@@ -8,7 +8,7 @@ namespace Hernia
 
     }
 
-    Surgeon::Surgeon(int id, QString name, Gender gender)
+    Surgeon::Surgeon(int id, const QString & name, const Gender & gender)
     {
         m_Id = id;
         m_Name = name;

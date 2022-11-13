@@ -13,7 +13,7 @@ class SurgeonsWindow : public QWidget
     Q_OBJECT
 
 public:
-    SurgeonsWindow(SurgeonsModel * model, QWidget *parent = nullptr);
+    SurgeonsWindow(SurgeonsModel * model, QWidget * parent = nullptr);
     ~SurgeonsWindow();
 
 private slots:

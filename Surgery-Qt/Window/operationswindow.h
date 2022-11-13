@@ -20,12 +20,12 @@ public:
 
 private slots:
     void on_addOperationButton_clicked();
+    void on_deleteOperationButton_clicked();
 
 private:
     Ui::OperationsWindow *ui;
     SurgeonsModel * m_SurgeonsModel;
     HandledOperationsModel * m_HandledOperationsModel;
-
 };
 
 #endif // OPERATIONSWINDOW_H

@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "Db/databasemanager.h"
 #include "Dialog/operationadddialog.h"
+#include "Dialog/operationdeletedialog.h"
 #include "ModelView/Model/handledoperationsmodel.h"
 #include "ModelView/View/handledoperationstableview.h"
 
@@ -40,12 +41,35 @@ void OperationsWindow::on_addOperationButton_clicked()
                 handledOperation.value().m_Id = opId;
                 m_HandledOperationsModel->AddHandledOperation(handledOperation.value());
 
-                QMessageBox::information(this,"Успех", "Операция #" + QString::number(handledOperation.value().m_Id) + " успешно добавлена", QMessageBox::Ok);
+                QMessageBox::information(this, "Успех", "Операция #" + QString::number(handledOperation.value().m_Id) +
+                                         " успешно добавлена", QMessageBox::Ok);
             }
             else
             {
-                QMessageBox::warning(this,"Предупреждение", "Не удалось добавить в базу операцию.", QMessageBox::Ok);
+                QMessageBox::warning(this, "Предупреждение", "Не удалось добавить в базу операцию.", QMessageBox::Ok);
             }
         }
+    }
+}
+
+void OperationsWindow::on_deleteOperationButton_clicked()
+{
+    OperationDeleteDialog dlg(this);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        int operationId = dlg.GetOperationId();
+
+        if (!db::DatabaseManager::GetInstance().IsHandledOperationByIdExists(operationId))
+        {
+            QMessageBox::warning(this, "Предупреждение", "Не существует операции с заданным номером", QMessageBox::Ok);
+            return;
+        }
+
+        db::DatabaseManager::GetInstance().DeleteHandledOperation(operationId);
+        m_HandledOperationsModel->DeleteHandledOperation(operationId);
+
+        QMessageBox::information(this, "Успех", "Операция #" + QString::number(operationId) +
+                                 " успешно удалена", QMessageBox::Ok);
     }
 }

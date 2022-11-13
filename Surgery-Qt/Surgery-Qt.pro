@@ -21,6 +21,7 @@ SOURCES += \
     Db/databasemanager.cpp \
     Dialog/datechoosedialog.cpp \
     Dialog/operationadddialog.cpp \
+    Dialog/operationdeletedialog.cpp \
     Dialog/sequelachoosedialog.cpp \
     Dialog/surgeonadddialog.cpp \
     ModelView/Model/genderlistmodel.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     Db/databasemanager.h \
     Dialog/datechoosedialog.h \
     Dialog/operationadddialog.h \
+    Dialog/operationdeletedialog.h \
     Dialog/sequelachoosedialog.h \
     Dialog/surgeonadddialog.h \
     ModelView/Model/genderlistmodel.h \
@@ -71,6 +73,7 @@ HEADERS += \
 FORMS += \
     Dialog/datechoosedialog.ui \
     Dialog/operationadddialog.ui \
+    Dialog/operationdeletedialog.ui \
     Dialog/sequelachoosedialog.ui \
     Dialog/surgeonadddialog.ui \
     Window/operationswindow.ui \

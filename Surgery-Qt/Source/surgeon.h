@@ -10,7 +10,7 @@ namespace Hernia
     {
     public:
         Surgeon();
-        Surgeon(int id, QString name, Gender gender);
+        Surgeon(int id, const QString & name, const Gender & gender);
 
         const QString& GetName() const;
         Gender GetGender() const;

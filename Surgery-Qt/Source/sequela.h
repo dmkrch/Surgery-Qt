@@ -10,7 +10,7 @@ namespace Hernia
     {
     public:
         Sequela();
-        Sequela(int m_Id, const QString & title, SequelaType sequelaType);
+        Sequela(int m_Id, const QString & title, const SequelaType & sequelaType);
 
         QString ToString() const;
 

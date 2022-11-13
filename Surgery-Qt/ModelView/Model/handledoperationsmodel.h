@@ -13,6 +13,7 @@ public:
     HandledOperationsModel();
 
     void AddHandledOperation(const Hernia::HandledOperation & handledOperation);
+    void DeleteHandledOperation(int operationId);
 
     const std::vector<Hernia::HandledOperation> & GetData() const;
 

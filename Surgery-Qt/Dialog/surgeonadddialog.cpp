@@ -42,7 +42,7 @@ void SurgeonAddDialog::OnAddButtonClicked()
     {
         QMessageBox::warning(this,"Предупреждение", "Имя не может быть пустым", QMessageBox::Ok);
     }
-    else if (surgeonName.length() > 30)
+    else if (surgeonName.length() > 50)
     {
          QMessageBox::warning(this,"Предупреждение", "Имя не может превышать 30 символов", QMessageBox::Ok);
     }

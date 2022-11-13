@@ -17,3 +17,14 @@ void HandledOperationsModel::AddHandledOperation(const Hernia::HandledOperation 
     m_HandledOperations.push_back(handledOperation);
     emit dataModified();
 }
+
+void HandledOperationsModel::DeleteHandledOperation(int operationId)
+{
+    m_HandledOperations.erase(std::remove_if(m_HandledOperations.begin(), m_HandledOperations.end(),
+        [operationId](const auto & operation)
+    {
+        return (operation.m_Id == operationId);
+    }), m_HandledOperations.end());
+
+    emit dataModified();
+}

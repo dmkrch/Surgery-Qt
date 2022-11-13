@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
-    <height>797</height>
+    <width>523</width>
+    <height>779</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="operationTitleCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -53,7 +53,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="labelOperationTitle">
          <property name="text">
           <string>Название операции</string>
          </property>
@@ -74,7 +74,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="surgeonCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -108,7 +108,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox_3">
+        <widget class="QCheckBox" name="dateCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -135,7 +135,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="labelFromDate">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -148,10 +148,10 @@
         </widget>
        </item>
        <item>
-        <widget class="QDateEdit" name="dateEdit"/>
+        <widget class="QDateEdit" name="dateFromEdit"/>
        </item>
        <item>
-        <widget class="QPushButton" name="openCalendarButton">
+        <widget class="QPushButton" name="openCalendarFromDate">
          <property name="maximumSize">
           <size>
            <width>22</width>
@@ -171,7 +171,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="labelToDate">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -184,10 +184,10 @@
         </widget>
        </item>
        <item>
-        <widget class="QDateEdit" name="dateEdit_3"/>
+        <widget class="QDateEdit" name="dateToEdit"/>
        </item>
        <item>
-        <widget class="QPushButton" name="openCalendarButton_3">
+        <widget class="QPushButton" name="openCalendarToDate">
          <property name="maximumSize">
           <size>
            <width>22</width>
@@ -272,7 +272,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox_4">
+        <widget class="QCheckBox" name="diagnosisCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -299,14 +299,14 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_14">
+        <widget class="QLabel" name="labelDiagnosis">
          <property name="text">
           <string>(Диагноз не задан)</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="buttonOpenDiagnosis">
          <property name="maximumSize">
           <size>
            <width>22</width>
@@ -333,7 +333,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox_5">
+        <widget class="QCheckBox" name="patientGenderCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -370,7 +370,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox_6">
+        <widget class="QCheckBox" name="recoveringDaysCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -391,6 +391,24 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_15">
+       <item>
+        <widget class="QLabel" name="recDaysLeftLabel">
+         <property name="text">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="recDaysRightLabel">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
@@ -404,7 +422,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QCheckBox" name="checkBox_7">
+        <widget class="QCheckBox" name="patientAgeCheckBox">
          <property name="maximumSize">
           <size>
            <width>30</width>
@@ -420,6 +438,24 @@
         <widget class="QLabel" name="label_8">
          <property name="text">
           <string>Возраст пациента</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_16">
+       <item>
+        <widget class="QLabel" name="patAgeLeftLabel">
+         <property name="text">
+          <string>16</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="patAgeRightLabel">
+         <property name="text">
+          <string>100</string>
          </property>
         </widget>
        </item>
@@ -501,7 +537,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="findHandledOperations">
        <property name="styleSheet">
         <string notr="true"/>
        </property>

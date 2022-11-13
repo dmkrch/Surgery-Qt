@@ -37,11 +37,14 @@ namespace db
         bool AddSurgeon(const Hernia::Surgeon & surgeon);
         bool AddHandledOperation(const Hernia::HandledOperation & operation);
 
+        bool DeleteHandledOperation(int operationId);
+
         int GetLastAddedSurgeonId() const;
         int GetLastAddedHandledOperationId() const;
         std::optional<Hernia::Surgeon> GetSurgeonById(int id);
         std::optional<Hernia::Operation> GetOperationById(int id);
         std::optional<Hernia::Sequela> GetSequelaById(int id);
+        bool IsHandledOperationByIdExists(int id);
 
     private:
         QSqlDatabase m_Db;
