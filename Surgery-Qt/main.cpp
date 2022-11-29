@@ -1,18 +1,23 @@
 #include "Window/mainwindow.h"
 
 #include <QApplication>
-#include <QDebug>
-
-#include "Source/gender.h"
-#include "Source/surgeon.h"
-#include "Source/sequelatype.h"
-#include "Db/databasemanager.h"
+#include "Authorization/Window/authorizationmainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    MainWindow mainWindow;
+
+    AuthorizationMainWindow authorizationWindow;
+
+    if (authorizationWindow.exec() == QDialog::Accepted)
+    {
+        mainWindow.show();
+    }
+    else
+    {
+        return 1;
+    }
 
     return a.exec();
 }

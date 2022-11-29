@@ -11,7 +11,7 @@
 #include "Source/sequela.h"
 #include "Source/operation.h"
 #include "Source/handledoperation.h"
-
+#include "Authorization/Source/user.h"
 
 namespace db
 {
@@ -33,18 +33,20 @@ namespace db
         void LoadSequelas(std::vector<Hernia::Sequela>& sequelas);
         void LoadGenders(std::vector<Hernia::Gender>& genders);
         void LoadHandledOperations(std::vector<Hernia::HandledOperation>& handledOperations);
-
         bool AddSurgeon(const Hernia::Surgeon & surgeon);
         bool AddHandledOperation(const Hernia::HandledOperation & operation);
-
         bool DeleteHandledOperation(int operationId);
-
         int GetLastAddedSurgeonId() const;
         int GetLastAddedHandledOperationId() const;
         std::optional<Hernia::Surgeon> GetSurgeonById(int id);
         std::optional<Hernia::Operation> GetOperationById(int id);
         std::optional<Hernia::Sequela> GetSequelaById(int id);
         bool IsHandledOperationByIdExists(int id);
+
+        std::optional<User> GetUserByLogin(const QString & login);
+        bool AddUser(const User & user);
+        bool AddLicenseKey();
+        int GetLastAddedLicenseKey() const;
 
     private:
         QSqlDatabase m_Db;

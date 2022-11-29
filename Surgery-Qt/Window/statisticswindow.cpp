@@ -11,6 +11,7 @@
 #include "Source/handledoperation.h"
 
 #include "Dialog/datechoosedialog.h"
+#include "Dialog/sequelachoosedialog.h"
 
 StatisticsWindow::StatisticsWindow(SurgeonsModel * surgeonsModel, HandledOperationsModel * handledOperationsModel, QWidget *parent) :
     QWidget(parent),
@@ -207,6 +208,16 @@ void StatisticsWindow::on_openCalendarToDate_clicked()
 
 void StatisticsWindow::on_findHandledOperations_clicked()
 {
+    // validations
+    if (ui->sequelaCheckBox->isChecked())
+    {
+        if (!m_Sequela)
+        {
+            QMessageBox::warning(this,"Предупреждение", "Осложнение не выбрано", QMessageBox::Ok);
+            return;
+        }
+    }
+
     std::vector<filterType> filters;
 
     // go through all checkbox and set up filters
@@ -265,6 +276,17 @@ void StatisticsWindow::on_findHandledOperations_clicked()
         });
     }
 
+    if (ui->sequelaCheckBox->isChecked())
+    {
+        filters.emplace_back([this](const Hernia::HandledOperation & operation)
+        {
+            if (!operation.m_Sequela)
+                return false;
+
+            return m_Sequela.value().GetId() == operation.m_Sequela.value().GetId();
+        });
+    }
+
     int filteredOperationCount = GetOperationsByFilters(filters);
     ui->operationsAmountLabel->setNum(filteredOperationCount);
 }
@@ -290,4 +312,20 @@ int StatisticsWindow::GetOperationsByFilters(const std::vector<filterType> & fil
     }
 
     return filteredOperationsCounter;
+}
+
+void StatisticsWindow::on_sequelaOpenButton_clicked()
+{
+    SequelaChooseDialog dlg(this);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        auto sequela = dlg.GetSequela();
+
+        if (sequela)
+        {
+            m_Sequela = sequela.value();
+            ui->sequelaLabel->setText(sequela.value().ToString());
+        }
+    }
 }

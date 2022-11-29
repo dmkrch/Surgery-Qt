@@ -298,4 +298,81 @@ namespace db
 
         return it != handledOperations.end();
     }
+
+    std::optional<User> DatabaseManager::GetUserByLogin(const QString & login)
+    {
+        QSqlQuery query;
+        query.prepare("SELECT count(login) from User WHERE login = '" + login + "';");
+
+        if (query.exec())
+        {
+            query.next();
+            if (query.value(0).toInt() > 0)
+            {
+                query.clear();
+                query.prepare("select password, login, user_type, register_date, license_key from User WHERE login = '" +
+                              login + "';");
+
+                if (!query.exec())
+                    return std::nullopt;
+
+                query.next();
+
+                QString password = query.value(0).toString();
+                QString login = query.value(1).toString();
+                UserType userType = static_cast<UserType>(query.value(2).toInt());
+                QDate date = query.value(3).toDate();
+
+                int licenseKey = query.value(4).toInt();
+                std::optional<int> licenseKeyOpt;
+                if (licenseKey)
+                    licenseKeyOpt = licenseKey;
+
+                return User(userType, login, password, date, licenseKeyOpt);
+                // user is found
+            }
+        }
+
+        return std::nullopt;
+    }
+
+    bool DatabaseManager::AddUser(const User & user)
+    {
+        QSqlQuery query;
+
+        query.prepare("INSERT INTO User(password, login, license_key, user_type, register_date) "
+                      "VALUES(:password, :login, :license_key, :user_type, :register_date); ");
+
+        query.bindValue(":password", user.GetPassword());
+        query.bindValue(":login", user.GetLogin());
+        query.bindValue(":license_key", QVariant());
+        query.bindValue(":user_type", static_cast<int>(user.GetUserType()));
+        query.bindValue(":register_date", user.GetRegisterDate());
+
+        return query.exec();
+    }
+
+    bool DatabaseManager::AddLicenseKey()
+    {
+        QSqlQuery query;
+
+        query.prepare("INSERT INTO UserType DEFAULT VALUES");
+
+        return query.exec();
+    }
+
+    int DatabaseManager::GetLastAddedLicenseKey() const
+    {
+        QSqlQuery query;
+
+        if (!query.exec("SELECT seq FROM sqlite_sequence WHERE name = 'LicenseKey'"))
+        {
+            qDebug() << "error with loading last license key id: " << query.lastError();
+            return 0;
+        }
+
+        query.next();
+
+        return query.value(0).toInt();
+    }
 }

@@ -18,6 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Authorization/Source/user.cpp \
+    Authorization/Window/authorizationmainwindow.cpp \
     Db/databasemanager.cpp \
     Dialog/datechoosedialog.cpp \
     Dialog/operationadddialog.cpp \
@@ -45,6 +47,8 @@ SOURCES += \
     Window/surgeonswindow.cpp
 
 HEADERS += \
+    Authorization/Source/user.h \
+    Authorization/Window/authorizationmainwindow.h \
     Db/databasemanager.h \
     Dialog/datechoosedialog.h \
     Dialog/operationadddialog.h \
@@ -79,7 +83,8 @@ FORMS += \
     Window/operationswindow.ui \
     Window/mainwindow.ui \
     Window/statisticswindow.ui \
-    Window/surgeonswindow.ui
+    Window/surgeonswindow.ui \
+    Authorization/Window/authorizationmainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

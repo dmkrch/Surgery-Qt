@@ -35,6 +35,8 @@ private slots:
     void on_openCalendarToDate_clicked();
     void on_findHandledOperations_clicked();
 
+    void on_sequelaOpenButton_clicked();
+
 private:
     void SetOperationTitleFilterEnabled(bool state);
     void SetSurgeonFilterEnabled(bool state);
@@ -52,6 +54,7 @@ private:
     SurgeonsComboView * m_SurgeonsCombo;
     RangeSlider* m_RecoveringDaysSlider;
     RangeSlider* m_PatientAgeSlider;
+    std::optional<Hernia::Sequela> m_Sequela;
 
     HandledOperationsModel * m_HandledOperationsModel;
 };
