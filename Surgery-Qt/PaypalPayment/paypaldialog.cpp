@@ -34,7 +34,7 @@ void PaypalDialog::CreateOrderRequest()
     request.setRawHeader("Content-Type", "application/json");
     request.setRawHeader("Authorization", GetBearerHeader().toUtf8());
 
-    QFile file("orderBody.json");
+    QFile file(GetPaypalOrderFilePath());
 
     if (file.open(QIODevice::ReadOnly))
     {
@@ -63,34 +63,7 @@ void PaypalDialog::onManagerFinished(QNetworkReply *reply)
     }
     else if (requestState == "approved")
     {
-        // incremenet invoice number
-        QString fileName = "orderBody.json";
-
-        QJsonDocument document = LoadJson("orderBody.json");
-        QJsonObject rootObject = document.object();
-
-        QJsonValueRef transactionsArrRef = rootObject.find("transactions").value();
-        QJsonArray transactionsArr = transactionsArrRef.toArray();
-
-        QJsonArray::iterator transactionsIterator = transactionsArr.begin();
-        QJsonValueRef firstTransactionRef = transactionsIterator[0];
-        QJsonObject firstTransaction = firstTransactionRef.toObject();
-
-        // get the invoice number
-        QString invoiceNumberStr = firstTransaction["invoice_number"].toString();
-        int invoiceNumberInt = invoiceNumberStr.toInt();
-
-        // now increment it
-        ++invoiceNumberInt;
-        firstTransaction["invoice_number"] = QString::number(invoiceNumberInt);
-
-        // edit json document
-        firstTransactionRef = firstTransaction;
-        transactionsArrRef = transactionsArr;
-        document.setObject(rootObject);
-
-        // now save to file
-        SaveJson(document, fileName);
+        IncrementInvoiceNumber();
         accept();
     }
     else
@@ -144,7 +117,7 @@ void PaypalDialog::finishLoading(bool)
 
 QString PaypalDialog::GetBearer() const
 {
-    QFile file(":/new/text/credentials.json");
+    QFile file(GetPaypalCredentialsFilePath());
 
     if (file.open(QIODevice::ReadOnly))
     {
@@ -161,6 +134,68 @@ QString PaypalDialog::GetBearer() const
 QString PaypalDialog::GetBearerHeader() const
 {
     return QString("Bearer ") + GetBearer();
+}
+
+QString PaypalDialog::GetPaypalOrderFilePath() const
+{
+    QString filePath = QDir::currentPath();
+    filePath += "/../Surgery-Qt/PaypalPayment/";
+    filePath += "orderBody.json";
+
+    return filePath;
+}
+
+QString PaypalDialog::GetPaypalCredentialsFilePath() const
+{
+    QString filePath = QDir::currentPath();
+    filePath += "/../Surgery-Qt/PaypalPayment/";
+    filePath += "credentials.json";
+
+    return filePath;
+}
+
+void PaypalDialog::IncrementInvoiceNumber()
+{
+    // incremenet invoice number
+    QJsonDocument document = LoadJson(GetPaypalOrderFilePath());
+    QJsonObject rootObject = document.object();
+
+    QJsonValueRef transactionsArrRef = rootObject.find("transactions").value();
+    QJsonArray transactionsArr = transactionsArrRef.toArray();
+
+    QJsonArray::iterator transactionsIterator = transactionsArr.begin();
+    QJsonValueRef firstTransactionRef = transactionsIterator[0];
+    QJsonObject firstTransaction = firstTransactionRef.toObject();
+
+    // get the invoice number
+    QString invoiceNumberStr = firstTransaction["invoice_number"].toString();
+    int invoiceNumberInt = invoiceNumberStr.toInt();
+
+    // now increment it
+    ++invoiceNumberInt;
+    firstTransaction["invoice_number"] = QString::number(invoiceNumberInt);
+
+    // edit json document
+    firstTransactionRef = firstTransaction;
+    transactionsArrRef = transactionsArr;
+    document.setObject(rootObject);
+
+    // now save to file
+    SaveJson(document, GetPaypalOrderFilePath());
+}
+
+QJsonDocument PaypalDialog::LoadJson(QString fileName)
+{
+    QFile jsonFile(fileName);
+    jsonFile.open(QFile::ReadOnly);
+    return QJsonDocument().fromJson(jsonFile.readAll());
+}
+
+void PaypalDialog::SaveJson(QJsonDocument document, QString fileName)
+{
+    QFile jsonFile(fileName);
+    jsonFile.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
+    jsonFile.write(document.toJson());
 }
 
 PaypalDialog::~PaypalDialog()

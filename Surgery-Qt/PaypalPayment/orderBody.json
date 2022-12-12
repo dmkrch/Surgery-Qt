@@ -1,46 +1,50 @@
 {
-  "intent": "sale",
-  "payer": {
-    "payment_method": "paypal"
-  },
-  "transactions": [{
-    "amount": {
-      "total": "10.00",
-      "currency": "USD",
-      "details": {
-        "subtotal": "10.00"
-      }
+    "intent": "sale",
+    "note_to_payer": "Contact us for any questions on your order.",
+    "payer": {
+        "payment_method": "paypal"
     },
-    "description": "This is the payment transaction description.",
-    "custom": "EBAY_EMS_90048630024435",
-    "invoice_number": "100018",
-    "payment_options": {
-      "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+    "redirect_urls": {
+        "cancel_url": "https://example.com",
+        "return_url": "https://google.com"
     },
-    "soft_descriptor": "ECHI5786786",
-    "item_list": {
-      "items": [{
-        "name": "License",
-        "description": "License for application Surgery",
-        "quantity": "1",
-        "price": "10.00",
-        "currency": "USD"
-      }],
-      "shipping_address": {
-        "recipient_name": "Dzmitry Karpovich",
-        "line1": "1thFloor",
-        "line2": "unit#34",
-        "city": "Grodno",
-        "country_code": "US",
-        "postal_code": "230029",
-        "phone": "375295773089",
-        "state": "BY"
-      }
-    }
-  }],
-  "note_to_payer": "Contact us for any questions on your order.",
-  "redirect_urls": {
-    "return_url": "https://google.com",
-    "cancel_url": "https://example.com"
-  }
+    "transactions": [
+        {
+            "amount": {
+                "currency": "USD",
+                "details": {
+                    "subtotal": "10.00"
+                },
+                "total": "10.00"
+            },
+            "custom": "EBAY_EMS_90048630024435",
+            "description": "This is the payment transaction description.",
+            "invoice_number": "100044",
+            "item_list": {
+                "items": [
+                    {
+                        "currency": "USD",
+                        "description": "License for application Surgery",
+                        "name": "License",
+                        "price": "10.00",
+                        "quantity": "1"
+                    }
+                ],
+                "shipping_address": {
+                    "city": "Grodno",
+                    "country_code": "US",
+                    "line1": "1thFloor",
+                    "line2": "unit#34",
+                    "phone": "375295773089",
+                    "postal_code": "230029",
+                    "recipient_name": "Dzmitry Karpovich",
+                    "state": "BY"
+                }
+            },
+            "payment_options": {
+                "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+            },
+            "soft_descriptor": "ECHI5786786"
+        }
+    ]
 }

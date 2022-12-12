@@ -37,20 +37,12 @@ private slots:
 private:
     QString GetBearer() const;
     QString GetBearerHeader() const;
+    QString GetPaypalOrderFilePath() const;
+    QString GetPaypalCredentialsFilePath() const;
+    void IncrementInvoiceNumber();
 
-    QJsonDocument LoadJson(QString fileName)
-    {
-        QFile jsonFile(fileName);
-        jsonFile.open(QFile::ReadOnly);
-        return QJsonDocument().fromJson(jsonFile.readAll());
-    }
-
-    void SaveJson(QJsonDocument document, QString fileName)
-    {
-        QFile jsonFile(fileName);
-        jsonFile.open(QFile::WriteOnly);
-        jsonFile.write(document.toJson());
-    }
+    QJsonDocument LoadJson(QString fileName);
+    void SaveJson(QJsonDocument document, QString fileName);
 
 private:
     Ui::PaypalDialog *ui;
