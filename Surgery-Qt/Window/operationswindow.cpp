@@ -8,7 +8,7 @@
 #include "ModelView/Model/handledoperationsmodel.h"
 #include "ModelView/View/handledoperationstableview.h"
 
-OperationsWindow::OperationsWindow(SurgeonsModel * model, HandledOperationsModel * handledOperationsModel, QWidget *parent) :
+OperationsWindow::OperationsWindow(SurgeonsModel * model, HandledOperationsModel * handledOperationsModel, UserType userType, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OperationsWindow)
 {
@@ -17,6 +17,9 @@ OperationsWindow::OperationsWindow(SurgeonsModel * model, HandledOperationsModel
     m_SurgeonsModel = model;
     m_HandledOperationsModel = handledOperationsModel;
     ui->verticalLayout->addWidget(new HandledOperationsTableView(m_HandledOperationsModel));
+
+    if (userType != UserType::Admin)
+        ui->deleteOperationButton->setEnabled(false);
 }
 
 OperationsWindow::~OperationsWindow()

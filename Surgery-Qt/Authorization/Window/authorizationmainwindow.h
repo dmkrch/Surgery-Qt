@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QDialog>
 
+#include "Authorization/Source/user.h"
+
 namespace Ui {
 class AuthorizationMainWindow;
 }
@@ -17,6 +19,7 @@ public:
     ~AuthorizationMainWindow();
 
     virtual void closeEvent(QCloseEvent *event) override;
+    const User & GetUser() const;
 
 private slots:
     void on_loginButton_clicked();
@@ -25,6 +28,7 @@ private slots:
 
 private:
     Ui::AuthorizationMainWindow *ui;
+    User m_CurrentUser;
 };
 
 #endif // AUTHORIZATIONMAINWINDOW_H

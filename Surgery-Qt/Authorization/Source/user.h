@@ -13,6 +13,7 @@ enum class UserType
 class User
 {
 public:
+    User() = default;
     User(UserType userType, const QString & login, const QString & password, const QDate & date, std::optional<int> licenseKey, int id);
 
     UserType GetUserType() const;

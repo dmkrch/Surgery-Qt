@@ -8,7 +8,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 
-SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, QWidget * parent)
+SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, UserType userType, QWidget * parent)
     : QWidget(parent)
     , ui(new Ui::SurgeonsWindow)
 {
@@ -25,6 +25,9 @@ SurgeonsWindow::SurgeonsWindow(SurgeonsModel * model, QWidget * parent)
     this->setLayout(vertLayout);
 
     connect(addSurgeonButton, &QPushButton::clicked, this, &SurgeonsWindow::on_addSurgeonButton_clicked);
+
+    if (userType != UserType::Admin)
+        addSurgeonButton->setEnabled(false);
 }
 
 SurgeonsWindow::~SurgeonsWindow()

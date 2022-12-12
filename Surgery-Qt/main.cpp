@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
     if (authorizationWindow.exec() == QDialog::Accepted)
     {
+        mainWindow.SetInfoAccordingToUser(authorizationWindow.GetUser());
         mainWindow.show();
     }
     else

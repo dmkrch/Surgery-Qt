@@ -5,6 +5,7 @@
 #include "Source/handledoperation.h"
 #include "ModelView/Model/surgeonsmodel.h"
 #include "ModelView/Model/handledoperationsmodel.h"
+#include "Authorization/Source/user.h"
 
 namespace Ui {
 class OperationsWindow;
@@ -15,7 +16,7 @@ class OperationsWindow : public QWidget
     Q_OBJECT
 
 public:
-    OperationsWindow(SurgeonsModel * model, HandledOperationsModel * handledOperationsModel, QWidget *parent = nullptr);
+    OperationsWindow(SurgeonsModel * model, HandledOperationsModel * handledOperationsModel, UserType userType, QWidget *parent = nullptr);
     ~OperationsWindow();
 
 private slots:

@@ -6,6 +6,7 @@
 #include "Window/operationswindow.h"
 #include "Source/surgeon.h"
 #include "Source/handledoperation.h"
+#include "Authorization/Source/user.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -23,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void SetInfoAccordingToUser(const User & user);
 
 private:
     Ui::MainWindow *ui;

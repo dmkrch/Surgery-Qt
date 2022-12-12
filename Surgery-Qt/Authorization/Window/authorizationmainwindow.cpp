@@ -1,10 +1,9 @@
 #include "authorizationmainwindow.h"
 #include "ui_authorizationmainwindow.h"
 
-#include "Db/databasemanager.h"
 #include <QMessageBox>
-#include "Authorization/Source/user.h"
 #include <QCloseEvent>
+#include "Db/databasemanager.h"
 #include "PaypalPayment/paypaldialog.h"
 
 AuthorizationMainWindow::AuthorizationMainWindow(QWidget *parent) :
@@ -64,6 +63,7 @@ void AuthorizationMainWindow::on_loginButton_clicked()
     }
 
     QMessageBox::information(this, "Успех", "Вы успешно авторизовались!", QMessageBox::Ok);
+    m_CurrentUser = foundedUserByLogin.value();
     accept();
 }
 
@@ -102,6 +102,11 @@ void AuthorizationMainWindow::on_registerButton_clicked()
 void AuthorizationMainWindow::closeEvent(QCloseEvent *event)
 {
     reject();
+}
+
+const User &AuthorizationMainWindow::GetUser() const
+{
+    return m_CurrentUser;
 }
 
 void AuthorizationMainWindow::on_licenseButton_clicked()
