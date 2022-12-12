@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/text">
+        <file>credentials.json</file>
+    </qresource>
+</RCC>

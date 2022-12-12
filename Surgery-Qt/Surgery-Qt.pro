@@ -1,8 +1,6 @@
-QT       += core gui
-QT       += sql
-QT       += core
+QT       += core gui sql network webengine webenginewidgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
 CONFIG += c++17
 
@@ -33,6 +31,7 @@ SOURCES += \
     ModelView/View/handledoperationstableview.cpp \
     ModelView/View/surgeonstableview.cpp \
     ModelView/View/surgeonscomboview.cpp \
+    PaypalPayment/paypaldialog.cpp \
     Source/CustomWidgets/rangeslider.cpp \
     main.cpp \
     Source/gender.cpp \
@@ -62,6 +61,7 @@ HEADERS += \
     ModelView/View/handledoperationstableview.h \
     ModelView/View/surgeonstableview.h \
     ModelView/View/surgeonscomboview.h \
+    PaypalPayment/paypaldialog.h \
     Source/CustomWidgets/rangeslider.h \
     Source/gender.h \
     Source/handledoperation.h \
@@ -80,6 +80,7 @@ FORMS += \
     Dialog/operationdeletedialog.ui \
     Dialog/sequelachoosedialog.ui \
     Dialog/surgeonadddialog.ui \
+    PaypalPayment/paypaldialog.ui \
     Window/operationswindow.ui \
     Window/mainwindow.ui \
     Window/statisticswindow.ui \
@@ -90,3 +91,14 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+COPY_CONFIG = ./PaypalPayment/orderBody.json
+copy_cmd.input = COPY_CONFIG
+copy_cmd.output = ${QMAKE_FILE_IN_BASE}${QMAKE_FILE_EXT}
+copy_cmd.commands = $$QMAKE_COPY_DIR ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
+copy_cmd.CONFIG += no_link_no_clean
+copy_cmd.variable_out = PRE_TARGETDEPS
+QMAKE_EXTRA_COMPILERS += copy_cmd
+
+RESOURCES += \
+    PaypalPayment/resources.qrc

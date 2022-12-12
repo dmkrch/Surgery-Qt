@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include "Authorization/Source/user.h"
 #include <QCloseEvent>
+#include "PaypalPayment/paypaldialog.h"
 
 AuthorizationMainWindow::AuthorizationMainWindow(QWidget *parent) :
     QDialog(parent),
@@ -50,12 +51,16 @@ void AuthorizationMainWindow::on_loginButton_clicked()
         return;
     }
 
-    auto deltaDays = foundedUserByLogin.value().GetRegisterDate().daysTo(QDate::currentDate());
-
-    if (deltaDays > 3)
+    // if user has no license key - check his register date
+    if (!foundedUserByLogin.value().GetLicenseKey())
     {
-        QMessageBox::warning(this, "Предупреждение", "Пробный период пользования программой истек!", QMessageBox::Ok);
-        return;
+        auto deltaDays = foundedUserByLogin.value().GetRegisterDate().daysTo(QDate::currentDate());
+
+        if (deltaDays > 3)
+        {
+            QMessageBox::warning(this, "Предупреждение", "Пробный период пользования программой истек!", QMessageBox::Ok);
+            return;
+        }
     }
 
     QMessageBox::information(this, "Успех", "Вы успешно авторизовались!", QMessageBox::Ok);
@@ -88,7 +93,7 @@ void AuthorizationMainWindow::on_registerButton_clicked()
         return;
     }
 
-    User user(UserType::SimpleUser, login, ui->passwordRegisterEdit->text(), QDate::currentDate(), std::nullopt);
+    User user(UserType::SimpleUser, login, ui->passwordRegisterEdit->text(), QDate::currentDate(), std::nullopt, 0);
 
     if (db::DatabaseManager::GetInstance().AddUser(user))
         QMessageBox::information(this, "Успех", "Пользователь " + user.GetLogin() + " успешно заригстрирован!", QMessageBox::Ok);
@@ -97,4 +102,54 @@ void AuthorizationMainWindow::on_registerButton_clicked()
 void AuthorizationMainWindow::closeEvent(QCloseEvent *event)
 {
     reject();
+}
+
+void AuthorizationMainWindow::on_licenseButton_clicked()
+{
+    // validations on lineEdits
+    QString userLogin = ui->licenseLoginEdit->text();
+
+    if (userLogin.isEmpty() || userLogin.length() > 15)
+    {
+        QMessageBox::warning(this, "Предупреждение", "Логин не может превышать 15 символов или быть пустым!", QMessageBox::Ok);
+        return;
+    }
+
+    auto user = db::DatabaseManager::GetInstance().GetUserByLogin(userLogin);
+
+    if (!user)
+    {
+        QMessageBox::warning(this, "Предупреждение", "Не существует пользователя с данным логином!", QMessageBox::Ok);
+        return;
+    }
+
+    if (user.value().GetLicenseKey())
+    {
+        QMessageBox::warning(this, "Предупреждение", "Пользователь " + userLogin + " уже купил лицензию", QMessageBox::Ok);
+        return;
+    }
+
+    // now everything is fine, we can proceed the payment via paypal
+    PaypalDialog dlg(this);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        db::DatabaseManager::GetInstance().CreateLicenseKey();
+        int key = db::DatabaseManager::GetInstance().GetLastCreatedLicenseKey();
+        user.value().SetLicenseKey(key);
+
+        if (db::DatabaseManager::GetInstance().AddLicenseKeyToUser(user.value().GetId(), key))
+        {
+            QMessageBox::information(this, "Успех", "Лицензия для пользователя " + userLogin + " успешно куплена", QMessageBox::Ok);
+        }
+        else
+        {
+            QMessageBox::warning(this, "Предупреждение", "Не удалось купить лицензию!", QMessageBox::Ok);
+        }
+
+    }
+    else
+    {
+        QMessageBox::warning(this, "Предупреждение", "Не удалось купить лицензию!", QMessageBox::Ok);
+    }
 }

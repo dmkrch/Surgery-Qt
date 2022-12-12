@@ -45,8 +45,9 @@ namespace db
 
         std::optional<User> GetUserByLogin(const QString & login);
         bool AddUser(const User & user);
-        bool AddLicenseKey();
-        int GetLastAddedLicenseKey() const;
+        bool CreateLicenseKey();
+        int GetLastCreatedLicenseKey() const;
+        bool AddLicenseKeyToUser(int userId, int key);
 
     private:
         QSqlDatabase m_Db;

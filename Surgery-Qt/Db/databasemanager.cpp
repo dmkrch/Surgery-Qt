@@ -310,7 +310,7 @@ namespace db
             if (query.value(0).toInt() > 0)
             {
                 query.clear();
-                query.prepare("select password, login, user_type, register_date, license_key from User WHERE login = '" +
+                query.prepare("select password, login, user_type, register_date, license_key, id from User WHERE login = '" +
                               login + "';");
 
                 if (!query.exec())
@@ -328,7 +328,9 @@ namespace db
                 if (licenseKey)
                     licenseKeyOpt = licenseKey;
 
-                return User(userType, login, password, date, licenseKeyOpt);
+                int id = query.value(5).toInt();
+
+                return User(userType, login, password, date, licenseKeyOpt, id);
                 // user is found
             }
         }
@@ -352,16 +354,16 @@ namespace db
         return query.exec();
     }
 
-    bool DatabaseManager::AddLicenseKey()
+    bool DatabaseManager::CreateLicenseKey()
     {
         QSqlQuery query;
 
-        query.prepare("INSERT INTO UserType DEFAULT VALUES");
+        query.prepare("INSERT INTO LicenseKey DEFAULT VALUES");
 
         return query.exec();
     }
 
-    int DatabaseManager::GetLastAddedLicenseKey() const
+    int DatabaseManager::GetLastCreatedLicenseKey() const
     {
         QSqlQuery query;
 
@@ -374,5 +376,17 @@ namespace db
         query.next();
 
         return query.value(0).toInt();
+    }
+
+    bool DatabaseManager::AddLicenseKeyToUser(int userId, int key)
+    {
+        QSqlQuery query;
+
+        query.prepare("UPDATE User SET license_key = :key WHERE id = :id;");
+
+        query.bindValue(":key", key);
+        query.bindValue(":id", userId);
+
+        return query.exec();
     }
 }

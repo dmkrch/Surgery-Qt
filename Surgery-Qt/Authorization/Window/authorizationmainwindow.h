@@ -21,6 +21,7 @@ public:
 private slots:
     void on_loginButton_clicked();
     void on_registerButton_clicked();
+    void on_licenseButton_clicked();
 
 private:
     Ui::AuthorizationMainWindow *ui;
