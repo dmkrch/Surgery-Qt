@@ -46,7 +46,7 @@ void HandledOperationsTableView::refreshData()
         this->setItem(row, 3, date);
 
         QTableWidgetItem * diagnosis = new QTableWidgetItem();
-        diagnosis->setText("Отсутствует");
+        diagnosis->setText(handledOperations[row].m_Diagnosis.ToString());
         this->setItem(row, 4, diagnosis);
 
         QTableWidgetItem * sequela = new QTableWidgetItem();

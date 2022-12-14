@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "Source/sequela.h"
+#include "Source/diagnosis.h"
 #include "Source/handledoperation.h"
 #include "ModelView/View/surgeonscomboview.h"
 #include "ModelView/Model/surgeonsmodel.h"
@@ -29,12 +30,15 @@ private slots:
     void on_openCalendarButton_clicked();
     void on_addOperationButton_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     void SetSequelaItemsEnabled(bool state);
 
 private:
     Ui::OperationAddDialog *ui;
     std::optional<Hernia::Sequela> m_Sequela;
+    std::optional<Hernia::Diagnosis> m_Diagnosis;
     std::optional<Hernia::HandledOperation> m_HandledOperation;
     SurgeonsComboView * m_SurgeonsCombo;
 };

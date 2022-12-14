@@ -5,9 +5,11 @@
 #include "ModelView/Model/operationtitleslistmodel.h"
 #include "Dialog/datechoosedialog.h"
 #include "Dialog/sequelachoosedialog.h"
+#include "Dialog/diagnosischoosedialog.h"
 #include "Db/databasemanager.h"
 #include "Source/sequela.h"
 #include "Source/handledoperation.h"
+#include "Source/diagnosis.h"
 
 OperationAddDialog::OperationAddDialog(SurgeonsModel * model, QWidget *parent) :
     QDialog(parent),
@@ -101,6 +103,12 @@ void OperationAddDialog::on_addOperationButton_clicked()
         }
     }
 
+    if (!m_Diagnosis)
+    {
+        QMessageBox::warning(this,"Предупреждение", "Диагноз не выбран", QMessageBox::Ok);
+        return;
+    }
+
     auto operation = db::DatabaseManager::GetInstance().GetOperationById(ui->operationTitleCombo->currentData().toInt());
 
     if (!operation)
@@ -127,7 +135,24 @@ void OperationAddDialog::on_addOperationButton_clicked()
     if (!ui->sequelaCheckBox->isChecked())
         m_Sequela = std::nullopt;
 
-    m_HandledOperation = Hernia::HandledOperation(0, operation.value(), surgeon.value(), date, m_Sequela, gender, birthDate, recoveringDays);
+    m_HandledOperation = Hernia::HandledOperation(0, operation.value(), surgeon.value(), date, m_Sequela, m_Diagnosis.value(),
+                                                  gender, birthDate, recoveringDays);
 
     accept();
+}
+
+void OperationAddDialog::on_pushButton_2_clicked()
+{
+    DiagnosisChooseDialog dlg(this);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        auto diagnosis = dlg.GetDiagnosis();
+
+        if (diagnosis)
+        {
+            m_Diagnosis = diagnosis.value();
+            ui->diagnosisLabel->setText(diagnosis.value().ToString());
+        }
+    }
 }

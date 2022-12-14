@@ -20,6 +20,7 @@ SOURCES += \
     Authorization/Window/authorizationmainwindow.cpp \
     Db/databasemanager.cpp \
     Dialog/datechoosedialog.cpp \
+    Dialog/diagnosischoosedialog.cpp \
     Dialog/operationadddialog.cpp \
     Dialog/operationdeletedialog.cpp \
     Dialog/sequelachoosedialog.cpp \
@@ -33,6 +34,8 @@ SOURCES += \
     ModelView/View/surgeonscomboview.cpp \
     PaypalPayment/paypaldialog.cpp \
     Source/CustomWidgets/rangeslider.cpp \
+    Source/diagnosis.cpp \
+    Source/diagnosistype.cpp \
     main.cpp \
     Source/gender.cpp \
     Source/handledoperation.cpp \
@@ -50,6 +53,7 @@ HEADERS += \
     Authorization/Window/authorizationmainwindow.h \
     Db/databasemanager.h \
     Dialog/datechoosedialog.h \
+    Dialog/diagnosischoosedialog.h \
     Dialog/operationadddialog.h \
     Dialog/operationdeletedialog.h \
     Dialog/sequelachoosedialog.h \
@@ -63,6 +67,8 @@ HEADERS += \
     ModelView/View/surgeonscomboview.h \
     PaypalPayment/paypaldialog.h \
     Source/CustomWidgets/rangeslider.h \
+    Source/diagnosis.h \
+    Source/diagnosistype.h \
     Source/gender.h \
     Source/handledoperation.h \
     Source/operation.h \
@@ -76,6 +82,7 @@ HEADERS += \
 
 FORMS += \
     Dialog/datechoosedialog.ui \
+    Dialog/diagnosischoosedialog.ui \
     Dialog/operationadddialog.ui \
     Dialog/operationdeletedialog.ui \
     Dialog/sequelachoosedialog.ui \

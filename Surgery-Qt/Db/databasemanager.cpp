@@ -127,7 +127,7 @@ namespace db
 
         QSqlQuery query;
         if (!query.exec("SELECT id, operation, surgeon, handle_date, sequela, patient_gender, recovering_days, \
-            diagnosis, patient_birth_date FROM HandledOperation"))
+            patient_birth_date, diagnosis_type, diagnosis_hernia_size FROM HandledOperation"))
         {
             qDebug() << "error with loading handled operations: " << query.lastError();
             return;
@@ -142,8 +142,9 @@ namespace db
             int sequelaId = query.value(4).toInt();
             int patientGender = query.value(5).toInt();
             int recoveringDays = query.value(6).toInt();
-            int diagnosisId = query.value(7).toInt();
-            QDate patientBirthDate = query.value(8).toDate();
+            QDate patientBirthDate = query.value(7).toDate();
+            int diagnosisTypeId = query.value(8).toInt();
+            int diagnosisSizeId = query.value(9).toInt();
 
             auto operation = GetOperationById(operationId);
             auto surgeon = GetSurgeonById(surgeonId);
@@ -153,8 +154,28 @@ namespace db
             if (!surgeon || !operation)
                 return;
 
-            handledOperations.emplace_back(handledOperationId, operation.value(), surgeon.value(), date, sequela,
+            Hernia::Diagnosis diagnosis = Hernia::Diagnosis(Hernia::DiagnosisType(static_cast<Hernia::DiagnosisTypeEnum>(diagnosisTypeId)),
+                                          Hernia::DiagnosisHerniaSize(static_cast<Hernia::DiagnosisHerniaSizeEnum>(diagnosisSizeId)));
+
+            handledOperations.emplace_back(handledOperationId, operation.value(), surgeon.value(), date, sequela, diagnosis,
                 gender, patientBirthDate, recoveringDays);
+        }
+    }
+
+    void DatabaseManager::LoadDiagnosisTypes(std::vector<Hernia::DiagnosisType> & diagnosisTypes)
+    {
+        diagnosisTypes.clear();
+
+        QSqlQuery query;
+        if(!query.exec("SELECT id FROM DiagnosisType"))
+        {
+            qDebug() << "error with loading diagnosis types: " << query.lastError();
+            return;
+        }
+
+        while(query.next())
+        {
+            diagnosisTypes.emplace_back(static_cast<Hernia::DiagnosisTypeEnum>(query.value(0).toInt()));
         }
     }
 
@@ -174,9 +195,9 @@ namespace db
         QSqlQuery query;
 
         query.prepare("INSERT INTO HandledOperation(operation, surgeon, handle_date, sequela, "
-                      "patient_gender, recovering_days, diagnosis, patient_birth_date) "
+                      "patient_gender, recovering_days, patient_birth_date, diagnosis_type, diagnosis_hernia_size) "
                       "VALUES(:operationId, :surgeonId,"
-                      ":date, :sequelaId, :patientGenderId, :recoveringDays, :diagnosis, :patientBirthDate); ");
+                      ":date, :sequelaId, :patientGenderId, :recoveringDays, :patientBirthDate, :diagnosis_type, :diagnosis_hernia_size); ");
 
         query.bindValue(":operationId", operation.m_Operation.GetId());
         query.bindValue(":surgeonId", operation.m_Surgeon.GetId());
@@ -189,8 +210,9 @@ namespace db
 
         query.bindValue(":patientGenderId", static_cast<int>(operation.m_PatientGender.GetGenderEnum()));
         query.bindValue(":recoveringDays", operation.m_RecoveringDays);
-        query.bindValue(":diagnosis", QVariant());
         query.bindValue(":patientBirthDate", operation.m_PatientDateBirth);
+        query.bindValue(":diagnosis_type", operation.m_Diagnosis.GetType().ToInt());
+        query.bindValue(":diagnosis_hernia_size", operation.m_Diagnosis.GetSize().ToInt());
 
         return query.exec();
     }
