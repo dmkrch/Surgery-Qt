@@ -37,6 +37,8 @@ private slots:
 
     void on_sequelaOpenButton_clicked();
 
+    void on_diagnosisOpenButton_clicked();
+
 private:
     void SetOperationTitleFilterEnabled(bool state);
     void SetSurgeonFilterEnabled(bool state);
@@ -55,6 +57,7 @@ private:
     RangeSlider* m_RecoveringDaysSlider;
     RangeSlider* m_PatientAgeSlider;
     std::optional<Hernia::Sequela> m_Sequela;
+    std::optional<Hernia::Diagnosis> m_Diagnosis;
 
     HandledOperationsModel * m_HandledOperationsModel;
 };

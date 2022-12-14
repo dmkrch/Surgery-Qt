@@ -12,6 +12,7 @@
 
 #include "Dialog/datechoosedialog.h"
 #include "Dialog/sequelachoosedialog.h"
+#include "Dialog/diagnosischoosedialog.h"
 
 StatisticsWindow::StatisticsWindow(SurgeonsModel * surgeonsModel, HandledOperationsModel * handledOperationsModel, QWidget *parent) :
     QWidget(parent),
@@ -142,7 +143,7 @@ void StatisticsWindow::SetSequlaFilterEnabled(bool state)
 void StatisticsWindow::SetDiagnosisFilterEnabled(bool state)
 {
     ui->labelDiagnosis->setEnabled(state);
-    ui->buttonOpenDiagnosis->setEnabled(state);
+    ui->diagnosisOpenButton->setEnabled(state);
 }
 
 void StatisticsWindow::SetPatientGenderFilterEnabled(bool state)
@@ -218,6 +219,15 @@ void StatisticsWindow::on_findHandledOperations_clicked()
         }
     }
 
+    if (ui->diagnosisCheckBox->isChecked())
+    {
+        if (!m_Diagnosis)
+        {
+            QMessageBox::warning(this,"Предупреждение", "Диагноз не выбран", QMessageBox::Ok);
+            return;
+        }
+    }
+
     std::vector<filterType> filters;
 
     // go through all checkbox and set up filters
@@ -287,7 +297,32 @@ void StatisticsWindow::on_findHandledOperations_clicked()
         });
     }
 
+    if (ui->diagnosisCheckBox->isChecked())
+    {
+        filters.emplace_back([this](const Hernia::HandledOperation & operation)
+        {
+            return m_Diagnosis.value().GetType().ToInt() == operation.m_Diagnosis.GetType().ToInt() &&
+                    m_Diagnosis.value().GetSize().ToInt() == operation.m_Diagnosis.GetSize().ToInt();
+        });
+    }
+
     int filteredOperationCount = GetOperationsByFilters(filters);
+
+    switch(filteredOperationCount)
+    {
+    case 1:
+        ui->label_4->setText("операция");
+        break;
+    case 2:
+    case 3:
+    case 4:
+        ui->label_4->setText("операции");
+        break;
+    default:
+        ui->label_4->setText("операций");
+        break;
+    }
+
     ui->operationsAmountLabel->setNum(filteredOperationCount);
 }
 
@@ -326,6 +361,22 @@ void StatisticsWindow::on_sequelaOpenButton_clicked()
         {
             m_Sequela = sequela.value();
             ui->sequelaLabel->setText(sequela.value().ToString());
+        }
+    }
+}
+
+void StatisticsWindow::on_diagnosisOpenButton_clicked()
+{
+    DiagnosisChooseDialog dlg(this);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        auto diagnosis = dlg.GetDiagnosis();
+
+        if (diagnosis)
+        {
+            m_Diagnosis = diagnosis.value();
+            ui->labelDiagnosis->setText(diagnosis.value().ToString());
         }
     }
 }
