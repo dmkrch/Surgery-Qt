@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>246</width>
-    <height>188</height>
+    <width>307</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,15 @@
    </item>
    <item>
     <widget class="QComboBox" name="herniaSizeCombo"/>
+   </item>
+   <item>
+    <widget class="QComboBox" name="diagnosisLMFCombo"/>
+   </item>
+   <item>
+    <widget class="QComboBox" name="diagnosisPRCombo"/>
+   </item>
+   <item>
+    <widget class="QComboBox" name="diagnosisWCombo"/>
    </item>
    <item>
     <spacer name="verticalSpacer">

@@ -7,7 +7,6 @@
 #include "Source/surgeon.h"
 #include "Source/operation.h"
 #include "Source/sequelatype.h"
-#include "Source/diagnosistype.h"
 #include "Source/diagnosis.h"
 #include "Source/gender.h"
 #include "Source/sequela.h"
@@ -35,7 +34,6 @@ namespace db
         void LoadSequelas(std::vector<Hernia::Sequela>& sequelas);
         void LoadGenders(std::vector<Hernia::Gender>& genders);
         void LoadHandledOperations(std::vector<Hernia::HandledOperation>& handledOperations);
-        void LoadDiagnosisTypes(std::vector<Hernia::DiagnosisType>& diagnosisTypes);
         bool AddSurgeon(const Hernia::Surgeon & surgeon);
         bool AddHandledOperation(const Hernia::HandledOperation & operation);
         bool DeleteHandledOperation(int operationId);

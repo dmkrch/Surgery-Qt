@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include "Source/diagnosis.h"
-#include "Source/diagnosistype.h"
 
 namespace Ui {
 class DiagnosisChooseDialog;
@@ -27,9 +26,7 @@ private:
     Ui::DiagnosisChooseDialog *ui;
 
     std::optional<Hernia::Diagnosis> m_CurrentDiagnosis;
-
-    std::vector<Hernia::DiagnosisType> m_DiagnosisTypes;
-    std::vector<Hernia::DiagnosisHerniaSize> m_HerniaSizes;
+    std::vector<Hernia::DiagnosisLMFParam> m_LMFs;
 };
 
 #endif // DIAGNOSISCHOOSEDIALOG_H

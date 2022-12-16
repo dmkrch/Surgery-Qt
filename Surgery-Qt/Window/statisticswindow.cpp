@@ -302,7 +302,10 @@ void StatisticsWindow::on_findHandledOperations_clicked()
         filters.emplace_back([this](const Hernia::HandledOperation & operation)
         {
             return m_Diagnosis.value().GetType().ToInt() == operation.m_Diagnosis.GetType().ToInt() &&
-                    m_Diagnosis.value().GetSize().ToInt() == operation.m_Diagnosis.GetSize().ToInt();
+                    m_Diagnosis.value().GetSize().ToInt() == operation.m_Diagnosis.GetSize().ToInt() &&
+                    m_Diagnosis.value().GetLMF().ToInt() == operation.m_Diagnosis.GetLMF().ToInt() &&
+                    m_Diagnosis.value().GetPR().ToInt() == operation.m_Diagnosis.GetPR().ToInt() &&
+                    m_Diagnosis.value().GetW().ToInt() == operation.m_Diagnosis.GetW().ToInt();
         });
     }
 

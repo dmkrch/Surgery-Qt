@@ -35,7 +35,6 @@ SOURCES += \
     PaypalPayment/paypaldialog.cpp \
     Source/CustomWidgets/rangeslider.cpp \
     Source/diagnosis.cpp \
-    Source/diagnosistype.cpp \
     main.cpp \
     Source/gender.cpp \
     Source/handledoperation.cpp \
@@ -68,7 +67,6 @@ HEADERS += \
     PaypalPayment/paypaldialog.h \
     Source/CustomWidgets/rangeslider.h \
     Source/diagnosis.h \
-    Source/diagnosistype.h \
     Source/gender.h \
     Source/handledoperation.h \
     Source/operation.h \
