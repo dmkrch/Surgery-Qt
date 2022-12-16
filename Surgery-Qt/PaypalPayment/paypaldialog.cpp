@@ -25,6 +25,9 @@ PaypalDialog::PaypalDialog(QWidget *parent) :
     connect(m_WebView, &QWebEngineView::loadProgress, this, &PaypalDialog::setProgress);
     connect(m_WebView, &QWebEngineView::loadFinished, this, &PaypalDialog::finishLoading);
 
+    m_WaitDialog.setWindowTitle("Ожидайте");
+    m_WaitDialog.resize(100,100);
+
     CreateOrderRequest();
 }
 
@@ -64,6 +67,7 @@ void PaypalDialog::onManagerFinished(QNetworkReply *reply)
     else if (requestState == "approved")
     {
         IncrementInvoiceNumber();
+        m_WaitDialog.close();
         accept();
     }
     else
@@ -112,6 +116,8 @@ void PaypalDialog::finishLoading(bool)
         request.setRawHeader("Content-Type", "application/json");
         request.setRawHeader("Authorization", GetBearerHeader().toUtf8());
         m_NetworkManager.post(request, requestBody.toUtf8());
+
+        m_WaitDialog.exec();
     }
 }
 

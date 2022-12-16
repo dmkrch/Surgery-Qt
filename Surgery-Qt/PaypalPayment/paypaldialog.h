@@ -12,13 +12,6 @@ namespace Ui {
 class PaypalDialog;
 }
 
-enum class RequestType
-{
-    CreateOrder,
-    ApproveOrder,
-    ExecuteOrder
-};
-
 class PaypalDialog : public QDialog
 {
     Q_OBJECT
@@ -50,6 +43,7 @@ private:
     QWebEngineView * m_WebView;
     QString m_ExecuteUrl;
     int m_LoadingPercentage = 0;
+    QDialog m_WaitDialog;
 };
 
 #endif // PAYPALDIALOG_H

@@ -14,6 +14,8 @@ AuthorizationMainWindow::AuthorizationMainWindow(QWidget *parent) :
 
     ui->passwordRegisterEdit->setEchoMode(QLineEdit::Password);
     ui->authorizePasswordEdit->setEchoMode(QLineEdit::Password);
+
+    this->setWindowTitle("Хирургия");
 }
 
 AuthorizationMainWindow::~AuthorizationMainWindow()
