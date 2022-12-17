@@ -35,6 +35,7 @@ SOURCES += \
     PaypalPayment/paypaldialog.cpp \
     Source/CustomWidgets/rangeslider.cpp \
     Source/diagnosis.cpp \
+    Window/adminpanelwindow.cpp \
     main.cpp \
     Source/gender.cpp \
     Source/handledoperation.cpp \
@@ -73,6 +74,7 @@ HEADERS += \
     Source/sequela.h \
     Source/sequelatype.h \
     Source/surgeon.h \
+    Window/adminpanelwindow.h \
     Window/operationswindow.h \
     Window/mainwindow.h \
     Window/statisticswindow.h \
@@ -86,6 +88,7 @@ FORMS += \
     Dialog/sequelachoosedialog.ui \
     Dialog/surgeonadddialog.ui \
     PaypalPayment/paypaldialog.ui \
+    Window/adminpanelwindow.ui \
     Window/operationswindow.ui \
     Window/mainwindow.ui \
     Window/statisticswindow.ui \

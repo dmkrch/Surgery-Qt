@@ -400,4 +400,15 @@ namespace db
 
         return query.exec();
     }
+
+    bool DatabaseManager::MakeUserToBeAdmin(const User &user)
+    {
+        QString userLogin = user.GetLogin();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE User SET user_type = 1;");
+
+        return query.exec();
+    }
 }

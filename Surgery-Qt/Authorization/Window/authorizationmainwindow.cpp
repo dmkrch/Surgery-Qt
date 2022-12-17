@@ -13,6 +13,7 @@ AuthorizationMainWindow::AuthorizationMainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->passwordRegisterEdit->setEchoMode(QLineEdit::Password);
+    ui->passwordRepeatRegisterEdit->setEchoMode(QLineEdit::Password);
     ui->authorizePasswordEdit->setEchoMode(QLineEdit::Password);
 
     this->setWindowTitle("Хирургия");
@@ -78,9 +79,15 @@ void AuthorizationMainWindow::on_registerButton_clicked()
         return;
     }
 
-    if (ui->passwordRegisterEdit->text().isEmpty() || ui->passwordRegisterEdit->text().length() > 15)
+    if (ui->passwordRegisterEdit->text().isEmpty() || ui->passwordRepeatRegisterEdit->text().isEmpty() || ui->passwordRegisterEdit->text().length() > 15)
     {
         QMessageBox::warning(this, "Предупреждение", "Пароль не может превышать 15 символов или быть пустым!", QMessageBox::Ok);
+        return;
+    }
+
+    if (ui->passwordRegisterEdit->text() != ui->passwordRepeatRegisterEdit->text())
+    {
+        QMessageBox::warning(this, "Предупреждение", "Пароли должны совпадать!", QMessageBox::Ok);
         return;
     }
 

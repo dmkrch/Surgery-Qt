@@ -6,6 +6,7 @@
 #include "Db/databasemanager.h"
 #include "Window/statisticswindow.h"
 #include "Window/surgeonswindow.h"
+#include "Window/adminpanelwindow.h"
 #include "ModelView/Model/surgeonsmodel.h"
 #include "ModelView/Model/handledoperationsmodel.h"
 
@@ -54,5 +55,10 @@ void MainWindow::SetInfoAccordingToUser(const User &user)
     ui->tabWidget->addTab(new StatisticsWindow(surgModel, handledOpModel), QString("Статистика"));
     ui->tabWidget->addTab(new OperationsWindow(surgModel, handledOpModel, user.GetUserType()), QString("Операции"));
     ui->tabWidget->addTab(new SurgeonsWindow(surgModel, user.GetUserType()), QString("Хирурги"));
+
+    if (user.GetUserType() == UserType::Admin)
+    {
+        ui->tabWidget->addTab(new AdminPanelWindow(), QString("Администрирование"));
+    }
     ui->tabWidget->setTabShape(QTabWidget::Triangular);
 }

@@ -50,6 +50,8 @@ namespace db
         int GetLastCreatedLicenseKey() const;
         bool AddLicenseKeyToUser(int userId, int key);
 
+        bool MakeUserToBeAdmin(const User & user);
+
     private:
         QSqlDatabase m_Db;
     };
